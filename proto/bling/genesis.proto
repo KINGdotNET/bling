@@ -1,0 +1,9 @@
+syntax = "proto3";
+package kingdotnet.bling.bling;
+
+option go_package = "github.com/kingdotnet/bling/x/bling/types";
+
+// GenesisState defines the capability module's genesis state.
+message GenesisState {
+}
+
