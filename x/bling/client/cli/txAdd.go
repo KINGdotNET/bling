@@ -1,0 +1,101 @@
+package cli
+
+import (
+  
+	"github.com/spf13/cobra"
+
+    "github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/client/flags"
+	"github.com/cosmos/cosmos-sdk/client/tx"
+	"github.com/kingdotnet/bling/x/bling/types"
+)
+
+func CmdCreateAdd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "create-add [post] [title] [body] [ipfs] [parent]",
+		Short: "Creates a new add",
+		Args:  cobra.ExactArgs(5),
+		RunE: func(cmd *cobra.Command, args []string) error {
+      argsPost := string(args[0])
+      argsTitle := string(args[1])
+      argsBody := string(args[2])
+      argsIpfs := string(args[3])
+      argsParent := string(args[4])
+      
+        	clientCtx := client.GetClientContextFromCmd(cmd)
+			clientCtx, err := client.ReadTxCommandFlags(clientCtx, cmd.Flags())
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgCreateAdd(clientCtx.GetFromAddress().String(), string(argsPost), string(argsTitle), string(argsBody), string(argsIpfs), string(argsParent))
+			if err := msg.ValidateBasic(); err != nil {
+				return err
+			}
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+
+	flags.AddTxFlagsToCmd(cmd)
+
+    return cmd
+}
+
+func CmdUpdateAdd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "update-add [id] [post] [title] [body] [ipfs] [parent]",
+		Short: "Update a add",
+		Args:  cobra.ExactArgs(6),
+		RunE: func(cmd *cobra.Command, args []string) error {
+            id := args[0]
+      argsPost := string(args[1])
+      argsTitle := string(args[2])
+      argsBody := string(args[3])
+      argsIpfs := string(args[4])
+      argsParent := string(args[5])
+      
+        	clientCtx := client.GetClientContextFromCmd(cmd)
+			clientCtx, err := client.ReadTxCommandFlags(clientCtx, cmd.Flags())
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgUpdateAdd(clientCtx.GetFromAddress().String(), id, string(argsPost), string(argsTitle), string(argsBody), string(argsIpfs), string(argsParent))
+			if err := msg.ValidateBasic(); err != nil {
+				return err
+			}
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+
+	flags.AddTxFlagsToCmd(cmd)
+
+    return cmd
+}
+
+func CmdDeleteAdd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "delete-add [id] [post] [title] [body] [ipfs] [parent]",
+		Short: "Delete a add by id",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+            id := args[0]
+
+        	clientCtx := client.GetClientContextFromCmd(cmd)
+			clientCtx, err := client.ReadTxCommandFlags(clientCtx, cmd.Flags())
+			if err != nil {
+				return err
+			}
+
+			msg := types.NewMsgDeleteAdd(clientCtx.GetFromAddress().String(), id)
+			if err := msg.ValidateBasic(); err != nil {
+				return err
+			}
+			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
+		},
+	}
+
+	flags.AddTxFlagsToCmd(cmd)
+
+    return cmd
+}

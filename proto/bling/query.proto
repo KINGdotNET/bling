@@ -4,12 +4,36 @@ package kingdotnet.bling.bling;
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 // this line is used by starport scaffolding # 1
+import "bling/add.proto";
 
 option go_package = "github.com/kingdotnet/bling/x/bling/types";
 
 // Query defines the gRPC querier service.
 service Query {
     // this line is used by starport scaffolding # 2
+	rpc Add(QueryGetAddRequest) returns (QueryGetAddResponse) {
+		option (google.api.http).get = "/kingdotnet/bling/bling/add/{id}";
+	}
+	rpc AddAll(QueryAllAddRequest) returns (QueryAllAddResponse) {
+		option (google.api.http).get = "/kingdotnet/bling/bling/add";
+	}
+
 }
 
 // this line is used by starport scaffolding # 3
+message QueryGetAddRequest {
+	string id = 1;
+}
+
+message QueryGetAddResponse {
+	Add Add = 1;
+}
+
+message QueryAllAddRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllAddResponse {
+	repeated Add Add = 1;
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}

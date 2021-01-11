@@ -1,0 +1,40 @@
+syntax = "proto3";
+package kingdotnet.bling.bling;
+
+option go_package = "github.com/kingdotnet/bling/x/bling/types";
+
+import "gogoproto/gogo.proto";
+
+message Add {
+  string creator = 1;
+  string id = 2;
+  string post = 3; 
+  string title = 4; 
+  string body = 5; 
+  string ipfs = 6; 
+  string parent = 7; 
+}
+
+message MsgCreateAdd {
+  string creator = 1;
+  string post = 2; 
+  string title = 3; 
+  string body = 4; 
+  string ipfs = 5; 
+  string parent = 6; 
+}
+
+message MsgUpdateAdd {
+  string creator = 1;
+  string id = 2;
+  string post = 3; 
+  string title = 4; 
+  string body = 5; 
+  string ipfs = 6; 
+  string parent = 7; 
+}
+
+message MsgDeleteAdd {
+  string creator = 1;
+  string id = 2;
+}
